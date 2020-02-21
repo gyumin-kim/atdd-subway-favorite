@@ -48,7 +48,6 @@ class LoginServiceTest {
 		AccessTokenResponseView response = loginService.createToken(request);
 
 		// then
-		assertThat(response.getAccessToken()).isNotNull();
 		assertThat(response.getAccessToken()).isEqualTo(TOKEN_1);
 	}
 
