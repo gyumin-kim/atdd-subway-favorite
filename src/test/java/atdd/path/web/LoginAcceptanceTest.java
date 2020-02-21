@@ -23,7 +23,7 @@ public class LoginAcceptanceTest extends AbstractAcceptanceTest {
 	@Test
 	void login() {
 		// given
-		signUpMember();
+		signUpMember(MEMBER_EMAIL, MEMBER_NAME, MEMBER_PASSWORD);
 		CreateAccessTokenRequestView request = CreateAccessTokenRequestView.of(MEMBER_EMAIL, MEMBER_PASSWORD);
 
 		// when & then
@@ -37,7 +37,7 @@ public class LoginAcceptanceTest extends AbstractAcceptanceTest {
 			.jsonPath("$.accessToken").isNotEmpty();
 	}
 
-	private void signUpMember() {
-		memberHttpTest.createMember(MEMBER_EMAIL, MEMBER_NAME, MEMBER_PASSWORD);
+	private void signUpMember(final String email, final String name, final String password) {
+		memberHttpTest.createMember(email, name, password);
 	}
 }
