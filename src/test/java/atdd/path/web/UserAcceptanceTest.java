@@ -24,7 +24,7 @@ public class UserAcceptanceTest extends AbstractAcceptanceTest {
 	@Test
 	void retrieveMyInfo() {
 		// given
-		signUpMember();
+		signUpMember(MEMBER_EMAIL, MEMBER_NAME, MEMBER_PASSWORD);
 		String accessToken = getAccessToken(MEMBER_EMAIL, MEMBER_PASSWORD);
 
 		// when & then
@@ -38,8 +38,8 @@ public class UserAcceptanceTest extends AbstractAcceptanceTest {
 			.jsonPath("$.password").isEqualTo(MEMBER_PASSWORD);
 	}
 
-	private void signUpMember() {
-		memberHttpTest.createMember(MEMBER_EMAIL, MEMBER_NAME, MEMBER_PASSWORD);
+	private void signUpMember(final String email, final String name, final String password) {
+		memberHttpTest.createMember(email, name, password);
 	}
 
 	private String getAccessToken(final String email, final String password) {
