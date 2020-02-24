@@ -20,6 +20,10 @@ public class Member {
 		this.password = password;
 	}
 
+	public static Member of(final String email, final String name, final String password) {
+		return new Member(email, name, password);
+	}
+
 	public Long getId() {
 		return id;
 	}

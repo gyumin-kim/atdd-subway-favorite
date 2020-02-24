@@ -1,34 +1,24 @@
 package atdd.path.application;
 
-import atdd.path.application.dto.UserResponseView;
-import atdd.path.application.exception.InvalidJwtAuthenticationException;
 import atdd.path.dao.MemberDao;
 import atdd.path.domain.Member;
-import atdd.path.exception.MemberNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
 	private MemberDao memberDao;
-	private JwtTokenProvider jwtTokenProvider;
 
-	public UserService(final MemberDao memberDao, final JwtTokenProvider jwtTokenProvider) {
+	public UserService(final MemberDao memberDao) {
 		this.memberDao = memberDao;
-		this.jwtTokenProvider = jwtTokenProvider;
 	}
 
 	@Transactional(readOnly = true)
-	public UserResponseView retrieveMyInfo(final HttpServletRequest req) {
-		String token = jwtTokenProvider.resolveToken(req);
-		if (!jwtTokenProvider.validateToken(token)) {
-			throw new InvalidJwtAuthenticationException("Expired or invalid JWT token");
-		}
-		String email = jwtTokenProvider.getUserEmail(token);
-		Member member = memberDao.findByEmail(email).orElseThrow(MemberNotFoundException::new);
-		return UserResponseView.of(member);
+	public Member findMemberByEmail(String email) {
+		Optional<Member> memberOptional = memberDao.findByEmail(email);
+		return memberOptional.orElse(null);
 	}
 }
